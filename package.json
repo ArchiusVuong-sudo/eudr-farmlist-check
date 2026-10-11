@@ -1,0 +1,14 @@
+{
+  "name": "eudr-farmlist-check-db",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Runs PostgreSQL 18 with PostGIS in WASM (PGlite) as a local sidecar for the Python app",
+  "license": "MIT",
+  "author": "Khanh Vuong Tuan",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@electric-sql/pglite-postgis": "0.2.8",
+    "@electric-sql/pglite-socket": "0.2.11"
+  }
+}
