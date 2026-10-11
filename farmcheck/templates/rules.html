@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Rule packs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Rule packs</h1>
+    <p class="sub">Rules are versioned data (YAML in <span class="mono">rules/</span>), not code. Legal parameters cite Regulation (EU) 2023/1115; every other threshold is a demo rule, not legal advice. Changed cells are highlighted.</p>
+  </div>
+</div>
+<div class="row" style="gap:12px;margin-bottom:14px">
+  {% for p in packs %}<div class="panel" style="flex:1"><div class="panel-body"><div class="row"><b>{{ p.version }}</b> {{ p.title }} <code class="small">{{ p.checksum }}</code></div><p class="small muted" style="margin-top:4px">{{ p.note }}</p></div></div>{% endfor %}
+</div>
+<section class="panel">
+  <table class="t">
+    <thead><tr><th>Rule key</th><th>Title</th><th>Source</th>{% for p in packs %}<th>{{ p.version }}: code, severity, parameters</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for key, r in packs[0].rules.items() %}
+      <tr>
+        <td class="mono small">{{ key }}</td>
+        <td>{{ r.title }}</td>
+        <td class="small">{% if r.citation %}<span class="tag tag-legal">{{ r.citation }}</span>{% else %}<span class="tag tag-demo">{{ DEMO_NOTE }}</span>{% endif %}</td>
+        {% for p in packs %}{% set rr = p.rules[key] %}
+        <td class="small">
+          <div class="{{ 'changed-cell' if (key ~ '.code') in changed or (key ~ '.severity') in changed }}"><span class="code-chip">{{ rr.code }}</span> <span class="sev {{ rr.severity }}">{{ rr.severity }}</span></div>
+          {% for n, prm in rr.params.items() %}<div class="{{ 'changed-cell' if (key ~ '.' ~ n) in changed }}"><span class="mono">{{ n }}</span> = <b>{{ prm.value }}</b> <span class="tag {{ 'tag-demo' if prm.source == 'demo' else 'tag-legal' }}">{{ 'demo rule' if prm.source == 'demo' else prm.source }}</span></div>{% endfor %}
+        </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

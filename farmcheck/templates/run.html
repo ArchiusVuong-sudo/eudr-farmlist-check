@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Run #{{ run.id }} · {{ run.file_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="{{ url_for('index') }}">Farm lists</a> / <a href="{{ url_for('mapping', farm_list_id=run.farm_list_id) }}">{{ run.file_name }}</a> / Run #{{ run.id }}</div>
+<div class="page-head">
+  <div>
+    <h1>Run #{{ run.id }} <span class="muted" style="font-weight:500">·</span> <span class="mono" style="font-size:19px">{{ run.file_name }}</span></h1>
+    <p class="sub">{{ total }} plots · declared country {{ run.country_name }} · rule pack <b>{{ run.version }}</b> {{ packs[run.version].title }} <span class="code-chip">{{ run.pack_checksum }}</span> · {{ run.started_at.strftime('%d %b %Y %H:%M:%S') }}</p>
+  </div>
+  <div class="row">
+    <a class="btn" href="{{ url_for('export_ready', run_id=run.id) }}" target="_blank" rel="noopener">GeoJSON of ready plots</a>
+    <a class="btn" href="{{ url_for('fixlist_page', run_id=run.id) }}">Fix list for the supplier</a>
+  </div>
+</div>
+
+<div class="stages" style="margin-bottom:14px" aria-label="Stages of this run">
+  {% set ns = namespace(total=0) %}
+  {% for k, label in stage_labels.items() %}{% set ns.total = ns.total + (run.stage_ms.get(k) or 0) %}
+  <div class="stage"><span class="k">{{ label }}</span><span class="v">{{ run.stage_ms.get(k)|ms }}</span>
+    <span class="d">{{ {'parse': 'Python reads cells', 'load': 'rows into PostGIS', 'repair': 'coords and boundaries', 'checks': 'set-based SQL', 'assess': 'joins with layers', 'verdict': 'status per plot', 'trace': 'steps for Support'}[k] }}</span></div>
+  {% endfor %}
+  <div class="stage total"><span class="k">Total</span><span class="v">{{ ns.total|ms }}</span><span class="d">whole run</span></div>
+</div>
+
+<div class="cards" style="margin-bottom:16px">
+  {% for s in STATUS_ORDER %}
+  <button class="card {{ s }}" type="button" hx-get="{{ url_for('run_plots', run_id=run.id, status=s) }}" hx-target="#plots" hx-swap="outerHTML" onclick="pickCard(this)">
+    <span class="lbl">{{ STATUS_LABELS[s] }}</span>
+    <span class="n">{{ counts[s] }}</span>
+    <span class="hint">{{ {'ready': 'passes every error and review check', 'repaired': 'fixed by a rule that fits one way only', 'review': 'loss after cut-off or protected area', 'needs_fix': 'goes back on the fix list'}[s] }}</span>
+  </button>
+  {% endfor %}
+</div>
+
+<div class="grid cols-run" style="margin-bottom:16px">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Results map</h2>
+      <div class="legend">
+        {% for s in STATUS_ORDER %}<span><i style="background:var(--{{ s }})"></i>{{ STATUS_LABELS[s].split(',')[0] }}</span>{% endfor %}
+        <span><i style="background:#7c3aed"></i>Forest loss after 31 Dec 2020</span>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <div id="run-map" class="map" data-src="{{ url_for('run_map', run_id=run.id) }}" data-plot-url="{{ url_for('plot_page', plot_id=0) }}"></div>
+      <span class="badge badge-synth map-badge"><span class="dot"></span>Synthetic data</span>
+    </div>
+  </section>
+  <section class="panel" style="display:flex;flex-direction:column;min-height:0">
+    <div class="panel-head"><h2>Issues by rule</h2><span class="muted small">{{ rules|sum(attribute='n') }} findings, {{ rules|length }} rules</span></div>
+    <div class="rules-list scroll" style="max-height:470px">
+      {% for r in rules %}
+      <div class="rule-item">
+        <div class="title"><span class="sev {{ r.severity }}">{{ SEVERITY_LABELS[r.severity] }}</span>
+          <span data-tip="{{ r.citation }}{% for k, p in r.params.items() %} · {{ k }} = {{ p.value }} ({{ 'demo rule' if p.source == 'demo' else p.source }}){% endfor %}">{{ r.title }}</span>
+          <span class="code-chip">{{ r.code }}</span></div>
+        <div class="count">{{ r.n }}</div>
+        <div class="cite">{% if r.legal %}<span class="tag tag-legal">{{ r.citation }}</span>{% else %}<span class="tag tag-demo">{{ DEMO_NOTE }}</span>{% endif %}
+          {% for k, p in r.params.items() if p.source == 'demo' and r.legal %} <span class="tag tag-demo" data-tip="{{ k }} = {{ p.value }}: {{ DEMO_NOTE }}">{{ k }} {{ p.value }}: demo rule</span>{% endfor %}</div>
+        <div class="plots">{% for code in r.plots[:12] %}<a href="{{ url_for('search', q=code) }}" hx-boost="false">{{ code }}</a>{% endfor %}{% if r.plots|length > 12 %}<span class="muted">+{{ r.plots|length - 12 }} more</span>{% endif %}</div>
+      </div>
+      {% else %}
+      <div class="empty"><b>No findings</b>Every plot passed every check.</div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+
+<div class="grid cols-side">
+  {% include "_plots.html" %}
+  <aside class="stack">
+    <section class="panel">
+      <div class="panel-head"><h2>Answer key</h2>{% if score %}<span class="tag tag-demo">synthetic sample</span>{% endif %}</div>
+      <div class="panel-body">
+        {% if score %}
+          <div class="row" style="align-items:baseline"><span class="score-big {{ 'ok' if score.perfect else 'bad' }}">{{ score.found }}/{{ score.injected }}</span><span class="muted">injected problems found</span></div>
+          <dl class="kv" style="margin-top:10px">
+            <dt>Unexpected flags</dt><dd class="{{ 'ok' if not score.unexpected else 'bad' }}">{{ score.unexpected|length }}</dd>
+            <dt>Status per row</dt><dd class="{{ 'ok' if score.status_match == score.rows else 'bad' }}">{{ score.status_match }}/{{ score.rows }} match the key</dd>
+            <dt>Key</dt><dd class="small">written by the sample generator</dd>
+          </dl>
+          {% for m in score.missed[:5] %}<div class="small bad">missed {{ m.code }} on {{ m.plot_code }}</div>{% endfor %}
+          {% for m in score.unexpected[:5] %}<div class="small bad">unexpected {{ m.code }} on {{ m.plot_code }}</div>{% endfor %}
+        {% else %}
+          <p class="muted small">No answer key for this file. The bundled samples come with one, written by the generator that made them.</p>
+        {% endif %}
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Result hash</h2>
+        {% if prev %}{% if prev.result_hash == run.result_hash %}<span class="match">✓ same as run #{{ prev.id }}</span>{% else %}<span class="match nomatch">differs from run #{{ prev.id }}</span>{% endif %}{% endif %}
+      </div>
+      <div class="panel-body stack" style="gap:10px">
+        <div><span class="hash">{{ run.result_hash }}</span></div>
+        <p class="small muted">A hash of every plot's status, issue codes, loss overlap and geometry, plus the rule pack and dataset checksums. Re-running the same list under the same pack must give the same hash.</p>
+        <form action="{{ url_for('rerun', farm_list_id=run.farm_list_id) }}" method="post" onsubmit="busy(this)">
+          <input type="hidden" name="version" value="{{ run.version }}"><input type="hidden" name="base_run" value="{{ run.id }}">
+          <button class="btn btn-sm" type="submit"><span class="spinner"></span><span class="btn-label">Re-run {{ run.version }}</span></button>
+        </form>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Rule update</h2><a class="small" href="{{ url_for('rules_page') }}">compare packs</a></div>
+      <form class="panel-body stack" style="gap:10px" action="{{ url_for('rerun', farm_list_id=run.farm_list_id) }}" method="post" onsubmit="busy(this)">
+        <input type="hidden" name="base_run" value="{{ run.id }}">
+        <label class="field">Re-run with
+          <select name="version">
+            {% for v in versions if v != run.version %}<option value="{{ v }}">{{ v }} · {{ packs[v].title }}</option>{% endfor %}
+            <option value="{{ run.version }}">{{ run.version }} · {{ packs[run.version].title }}</option>
+          </select>
+        </label>
+        <button class="btn btn-primary btn-sm" type="submit"><span class="spinner"></span><span class="btn-label">Re-run and show what changes</span></button>
+      </form>
+      {% if runs|length > 1 %}
+      <div class="panel-body small" style="border-top:1px solid var(--line-2)">
+        <h3 style="margin-bottom:6px">Runs of this list</h3>
+        {% for r in runs %}<div class="row" style="justify-content:space-between"><a href="{{ url_for('run_page', run_id=r.id) }}">#{{ r.id }} {{ r.version }}</a><span class="mono muted">{{ r.result_hash }}</span>{% if r.id != run.id %}<a href="{{ url_for('diff_page', run_a=r.id if r.id < run.id else run.id, run_b=run.id if r.id < run.id else r.id) }}">diff</a>{% else %}<span class="muted">this run</span>{% endif %}</div>{% endfor %}
+      </div>
+      {% endif %}
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Assessment query</h2><span class="muted small">{{ run.assess_ms|ms }}</span></div>
+      <div class="panel-body">
+        <p class="small muted" style="margin-bottom:6px">Plan line for the join of plots with forest-loss patches, as PostGIS printed it:</p>
+        <code class="small" style="display:block;white-space:pre-wrap;background:#f3f5f3;padding:8px;border-radius:6px">{{ plan_line }}</code>
+      </div>
+    </section>
+  </aside>
+</div>
+{% endblock %}

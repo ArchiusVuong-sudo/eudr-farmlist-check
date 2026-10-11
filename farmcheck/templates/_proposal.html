@@ -1,0 +1,75 @@
+<div id="proposal" class="stack">
+  {% set m = prop.model %}
+  {% if prop.error %}
+    <div class="banner error"><div><b>No model proposal:</b> {{ prop.error }}. Pick the fields below by hand; header rules matched {{ prop.rules_matched or 0 }} of {{ fl.headers|length }} columns.</div></div>
+  {% elif prop.source == 'model' %}
+    <div class="banner model">
+      <div style="flex:1">
+        <b>Proposed by {{ m.model }}</b>
+        {% if m.mode == 'replay' %}<span class="badge badge-replay" style="margin-left:6px">replayed, {{ m.model }}, {{ m.recorded_at }}</span>{% else %}<span class="badge badge-live" style="margin-left:6px">live</span>{% endif %}
+        <div class="small" style="margin-top:4px">
+          No header rule matched these headers{% if prop.rules_matched %} (rules matched {{ prop.rules_matched }}){% endif %}, so the model proposed one field per column from the headers and column profiles; it saw no cell values.
+          {{ m.duration_ms|ms }} · {{ m.num_turns }} turns{% if m.cost_usd is not none %} · ${{ '%.4f'|format(m.cost_usd) }}{% endif %}{% if m.attempts and m.attempts > 1 %} · {{ m.attempts }} attempts{% endif %}{% if m.mode == 'replay' %} (as recorded){% endif %}
+          {% if m.fallback_reason %}<br><b>The live call failed, so this is the recorded replay:</b> {{ m.fallback_reason }}{% endif %}
+        </div>
+      </div>
+    </div>
+  {% elif prop.source == 'profile' %}
+    <div class="banner rules"><div><b>Saved mapping profile #{{ prop.profile_id }} reused.</b> This header layout was confirmed before, so no rules or model call were needed. Check it and confirm.</div></div>
+  {% else %}
+    <div class="banner rules"><div><b>Mapped by header rules, no model call.</b> The English, Spanish, Portuguese and French header rules recognised these columns.</div></div>
+  {% endif %}
+
+  <form class="panel" action="{{ url_for('confirm', farm_list_id=fl.id) }}" method="post" onsubmit="busy(this)">
+    <div class="panel-head">
+      <h2>Column mapping</h2>
+      <div class="row small muted">Every proposal is backed by a value check on the column, or shown red. Change any field before you confirm.</div>
+    </div>
+    <table class="t">
+      <thead><tr><th style="width:21%">Column in the file</th><th style="width:15%">Field</th><th style="width:11%">Confidence</th><th>Reason</th><th style="width:24%">Value check</th></tr></thead>
+      <tbody>
+      {% for c in prop.columns %}
+        {% set p = profiles[c.column] %}
+        <tr>
+          <td>
+            <div style="font-weight:650">{{ c.column }}</div>
+            <div class="small muted">{{ p.kind }} · {{ p.non_empty }}/{{ p.rows }} filled{% if p.numeric_min is not none and p.kind in ('number', 'mixed') %} · {{ p.numeric_min|round(3) }} to {{ p.numeric_max|round(3) }}{% endif %}</div>
+            {% if p.patterns %}<div class="small" style="margin-top:2px"><span class="code-chip" title="shape mask: letters A/a, digits 9">{{ p.patterns[0][0] }}</span></div>{% endif %}
+          </td>
+          <td>
+            <select name="field_{{ loop.index0 }}" aria-label="Field for {{ c.column }}" style="width:100%">
+              {% for f in fields %}<option value="{{ f.name }}" {{ 'selected' if f.name == c.field }}>{{ f.label }}</option>{% endfor %}
+            </select>
+            <div style="margin-top:5px"><span class="src {{ c.source }}">{{ c.source if c.source != 'none' else 'unmapped' }}</span></div>
+          </td>
+          <td>{% if c.source in ('model', 'rules', 'profile') %}<span class="conf"><span class="bar"><i style="width:{{ (c.confidence * 100)|round|int }}%"></i></span>{{ '%.2f'|format(c.confidence) }}</span>{% else %}<span class="muted">-</span>{% endif %}</td>
+          <td class="small">{% if c.source == 'model' %}<span data-tip="The model's reason, in English, from the header and the column profile">{{ c.reason }}</span>{% else %}<span class="muted">{{ c.reason }}</span>{% endif %}</td>
+          <td><div class="check {{ 'ok' if c.check_ok else 'fail' }}"><span class="ic">{{ '✓' if c.check_ok else '!' }}</span><span>{{ c.check }}</span></div></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="panel-body" style="border-top:1px solid var(--line-2)">
+      <div class="row" style="justify-content:space-between;align-items:flex-end">
+        <div class="stack" style="gap:10px;flex:1">
+          {% if prop.payload %}
+          <details>
+            <summary>What the model saw</summary>
+            <p class="small muted" style="margin-top:6px">Headers, the declared country and a profile per column (kind, fill, value ranges, decimals, shape masks). No cell values, so no producer names or plot codes.</p>
+            <pre class="json">{{ prop.payload|tojson_pretty }}</pre>
+          </details>
+          {% endif %}
+          <p class="small muted">Nothing runs until you confirm. The confirmed mapping is saved as a profile, so the next file with this header layout maps without a model call.</p>
+        </div>
+        <div class="row" style="align-items:flex-end;margin-left:24px">
+          <label class="field">Rule pack
+            <select name="version">
+              {% for v in versions %}<option value="{{ v }}">{{ v }} · {{ packs[v].title }}</option>{% endfor %}
+            </select>
+          </label>
+          <button class="btn btn-primary" type="submit"><span class="spinner"></span><span class="btn-label">Confirm mapping and run</span></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

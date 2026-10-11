@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Farm lists{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Check a supplier's farm list</h1>
+    <p class="sub">Upload a CSV or XLSX of plots. Columns are mapped (header rules, then a model proposal you confirm), every plot is validated and repaired in PostGIS, and checked against forest loss after the 31 Dec 2020 cut-off.</p>
+  </div>
+</div>
+
+<div class="hero">
+  <section class="panel">
+    <div class="panel-head"><h2>Upload a farm list</h2><span class="muted small">CSV (any delimiter) or XLSX, up to 10 MB</span></div>
+    <div class="panel-body">
+      <form class="dropzone" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" onsubmit="busy(this)">
+        <label class="field">File
+          <input type="file" name="file" accept=".csv,.xlsx,.txt" required>
+        </label>
+        <div class="row" style="align-items:flex-end">
+          <label class="field" style="flex:1">Declared country of production
+            <select name="country" required>
+              {% for c in countries %}<option value="{{ c.iso2 }}">{{ c.name }}</option>{% endfor %}
+            </select>
+          </label>
+          <button class="btn btn-primary" type="submit"><span class="spinner"></span><span class="btn-label">Upload</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><h2>Or try a bundled sample</h2><span class="tag tag-demo">synthetic</span></div>
+    <div class="panel-body grid cols-2">
+      <form class="sample" action="{{ url_for('upload') }}" method="post" onsubmit="busy(this)">
+        <input type="hidden" name="sample" value="vn_htx_daklak.xlsx">
+        <span class="nm">vn_htx_daklak.xlsx</span>
+        <span class="small muted">60 plots from an invented cooperative in Đắk Lắk, Vietnam. Vietnamese headers, UTM metres, swapped and padded coordinates.</span>
+        <span class="small"><span class="src model">model</span> no header rule matches, so the model proposes the mapping</span>
+        <button class="btn btn-sm" type="submit"><span class="spinner"></span><span class="btn-label">Use this sample</span></button>
+      </form>
+      <form class="sample" action="{{ url_for('upload') }}" method="post" onsubmit="busy(this)">
+        <input type="hidden" name="sample" value="co_cooperativa_huila.csv">
+        <span class="nm">co_cooperativa_huila.csv</span>
+        <span class="small muted">80 plots in Huila, Colombia. ';' delimiter, decimal commas, DMS cells, dropped minus signs.</span>
+        <span class="small"><span class="src rules">rules</span> Spanish headers map by rules, no model call</span>
+        <button class="btn btn-sm" type="submit"><span class="spinner"></span><span class="btn-label">Use this sample</span></button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<section class="panel">
+  <div class="panel-head"><h2>Farm lists</h2><span class="muted small">{{ lists|length }} uploaded</span></div>
+  {% if lists %}
+  <table class="t">
+    <thead><tr><th>File</th><th>Country</th><th class="num">Rows</th><th>Latest run</th><th>Status of plots</th><th></th></tr></thead>
+    <tbody>
+    {% for l in lists %}
+      <tr>
+        <td><span class="mono">{{ l.file_name }}</span><div class="small muted">#{{ l.id }} · uploaded {{ l.uploaded_at.strftime('%d %b %H:%M') }}</div></td>
+        <td>{{ l.country_name }}</td>
+        <td class="num">{{ l.n_rows }}</td>
+        <td>{% if l.last_run_id %}<a href="{{ url_for('run_page', run_id=l.last_run_id) }}">Run #{{ l.last_run_id }}</a> <span class="tag">{{ l.last_version }}</span>{% else %}<span class="muted">mapping not confirmed</span>{% endif %}</td>
+        <td>
+          {% if l.last_counts %}
+          <div class="mini-pills">
+            {% for s in STATUS_ORDER %}{% if l.last_counts.get(s) %}<span class="pill {{ s }}">{{ l.last_counts[s] }} {{ STATUS_LABELS[s].split(',')[0] }}</span>{% endif %}{% endfor %}
+          </div>
+          {% endif %}
+        </td>
+        <td class="num">
+          {% if l.last_run_id %}<a class="btn btn-sm" href="{{ url_for('run_page', run_id=l.last_run_id) }}">Open</a>
+          {% else %}<a class="btn btn-sm" href="{{ url_for('mapping', farm_list_id=l.id) }}">Map columns</a>{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty"><b>No farm lists yet</b>Upload a file above, or try one of the bundled samples.</div>
+  {% endif %}
+</section>
+{% endblock %}

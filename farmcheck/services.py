@@ -205,7 +205,7 @@ def _verdict(p: dict[str, Any]) -> str:
         return "loss after cut-off"
     if "PROTECTED_AREA_OVERLAP" in codes:
         return "protected-area overlap"
-    return "no overlap" if p["status"] != "needs_fix" else "not assessed or needs fix"
+    return "no overlap found" if p.get("assessable") else "not assessed"
 
 
 def compute_diff(ra: dict[str, Any], rb: dict[str, Any], pa: dict[int, dict[str, Any]], pb: dict[int, dict[str, Any]]) -> dict[str, Any]:

@@ -39,7 +39,7 @@ FROM run r JOIN rule_pack rp ON rp.id = r.rule_pack_id
 WHERE r.farm_list_id = :farm_list_id ORDER BY r.id;
 
 -- name: plots_for_run
-SELECT p.id, p.row_number, p.plot_code, p.producer, p.admin_area, p.declared_area_ha, p.geom_kind, p.status,
+SELECT p.id, p.row_number, p.plot_code, p.producer, p.admin_area, p.declared_area_ha, p.geom_kind, p.status, p.assessable,
        p.coord_format, p.area_ha, p.assess_basis, p.repair, p.lat_in, p.lon_in,
        round(ST_Y(ST_PointOnSurface(p.geom))::numeric, 6) AS lat, round(ST_X(ST_PointOnSurface(p.geom))::numeric, 6) AS lon,
        coalesce((SELECT jsonb_agg(jsonb_build_object('code', i.code, 'severity', i.severity, 'rule_key', i.rule_key,

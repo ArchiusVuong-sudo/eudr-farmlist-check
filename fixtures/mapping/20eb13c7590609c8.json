@@ -1,0 +1,308 @@
+{
+ "note": "Recorded from a real live run by scripts/record_fixtures.py",
+ "payload": {
+  "declared_country": "Vietnam",
+  "headers": [
+   "STT",
+   "Mã thửa",
+   "Tên nông hộ",
+   "Xã",
+   "Huyện",
+   "Tỉnh",
+   "Vĩ độ",
+   "Kinh độ",
+   "Diện tích (ha)",
+   "Ranh giới thửa (WKT)",
+   "Ghi chú"
+  ],
+  "columns": [
+   {
+    "header": "STT",
+    "kind": "number",
+    "filled": "60/60",
+    "distinct_share": 1.0,
+    "patterns": [
+     {
+      "mask": "99",
+      "share": 0.85
+     },
+     {
+      "mask": "9",
+      "share": 0.15
+     }
+    ],
+    "number_share": 1.0,
+    "range": [
+     1.0,
+     60.0
+    ],
+    "decimals": [
+     0,
+     0
+    ],
+    "decimal_comma_share": 0.0,
+    "dms_share": 0.0,
+    "lat_range_share": 1.0,
+    "metres_share": 0.0
+   },
+   {
+    "header": "Mã thửa",
+    "kind": "text",
+    "filled": "60/60",
+    "distinct_share": 0.983,
+    "patterns": [
+     {
+      "mask": "AA-9999",
+      "share": 1.0
+     }
+    ]
+   },
+   {
+    "header": "Tên nông hộ",
+    "kind": "text",
+    "filled": "60/60",
+    "distinct_share": 0.983,
+    "patterns": [
+     {
+      "mask": "Aa AAA-999",
+      "share": 1.0
+     }
+    ]
+   },
+   {
+    "header": "Xã",
+    "kind": "text",
+    "filled": "60/60",
+    "distinct_share": 0.1,
+    "patterns": [
+     {
+      "mask": "Aa AAA-A",
+      "share": 1.0
+     }
+    ]
+   },
+   {
+    "header": "Huyện",
+    "kind": "text",
+    "filled": "60/60",
+    "distinct_share": 0.05,
+    "patterns": [
+     {
+      "mask": "Aaaaa AAA-9",
+      "share": 1.0
+     }
+    ]
+   },
+   {
+    "header": "Tỉnh",
+    "kind": "text",
+    "filled": "60/60",
+    "distinct_share": 0.017,
+    "patterns": [
+     {
+      "mask": "Aaa Aaa",
+      "share": 1.0
+     }
+    ]
+   },
+   {
+    "header": "Vĩ độ",
+    "kind": "number",
+    "filled": "59/60",
+    "distinct_share": 0.983,
+    "patterns": [
+     {
+      "mask": "99.999999",
+      "share": 0.814
+     },
+     {
+      "mask": "99.9999",
+      "share": 0.051
+     },
+     {
+      "mask": "9999999.99",
+      "share": 0.051
+     }
+    ],
+    "number_share": 0.983,
+    "range": [
+     12.823053,
+     1435081.77
+    ],
+    "decimals": [
+     2,
+     6
+    ],
+    "decimal_comma_share": 0.017,
+    "dms_share": 0.0,
+    "lat_range_share": 0.881,
+    "metres_share": 0.051
+   },
+   {
+    "header": "Kinh độ",
+    "kind": "number",
+    "filled": "59/60",
+    "distinct_share": 0.983,
+    "patterns": [
+     {
+      "mask": "999.999999",
+      "share": 0.847
+     },
+     {
+      "mask": "999.9999",
+      "share": 0.051
+     },
+     {
+      "mask": "999999.99",
+      "share": 0.051
+     }
+    ],
+    "number_share": 1.0,
+    "range": [
+     12.873359,
+     235918.45
+    ],
+    "decimals": [
+     2,
+     6
+    ],
+    "decimal_comma_share": 0.0,
+    "dms_share": 0.0,
+    "lat_range_share": 0.051,
+    "metres_share": 0.051
+   },
+   {
+    "header": "Diện tích (ha)",
+    "kind": "number",
+    "filled": "57/60",
+    "distinct_share": 0.912,
+    "patterns": [
+     {
+      "mask": "9.99",
+      "share": 1.0
+     }
+    ],
+    "number_share": 1.0,
+    "range": [
+     0.63,
+     8.86
+    ],
+    "decimals": [
+     2,
+     2
+    ],
+    "decimal_comma_share": 0.0,
+    "dms_share": 0.0,
+    "lat_range_share": 1.0,
+    "metres_share": 0.0
+   },
+   {
+    "header": "Ranh giới thửa (WKT)",
+    "kind": "wkt",
+    "filled": "16/60",
+    "distinct_share": 1.0,
+    "patterns": [
+     {
+      "mask": "POLYGON ((…))",
+      "share": 1.0
+     }
+    ],
+    "wkt_share": 1.0
+   },
+   {
+    "header": "Ghi chú",
+    "kind": "text",
+    "filled": "3/60",
+    "distinct_share": 0.333,
+    "patterns": [
+     {
+      "mask": "Aaa aa AA-AAA",
+      "share": 1.0
+     }
+    ]
+   }
+  ]
+ },
+ "result": {
+  "proposal": {
+   "columns": [
+    {
+     "column": "STT",
+     "field": "row_ref",
+     "confidence": 0.95,
+     "reason": "STT means serial number, a running row count 1-60."
+    },
+    {
+     "column": "Mã thửa",
+     "field": "plot_code",
+     "confidence": 0.95,
+     "reason": "Mã thửa means plot code, near-unique ids."
+    },
+    {
+     "column": "Tên nông hộ",
+     "field": "producer",
+     "confidence": 0.9,
+     "reason": "Tên nông hộ means farm household name."
+    },
+    {
+     "column": "Xã",
+     "field": "admin_area",
+     "confidence": 0.9,
+     "reason": "Xã means commune, the smallest admin unit."
+    },
+    {
+     "column": "Huyện",
+     "field": "municipality",
+     "confidence": 0.9,
+     "reason": "Huyện means district."
+    },
+    {
+     "column": "Tỉnh",
+     "field": "province",
+     "confidence": 0.95,
+     "reason": "Tỉnh means province."
+    },
+    {
+     "column": "Vĩ độ",
+     "field": "latitude",
+     "confidence": 0.95,
+     "reason": "Vĩ độ means latitude, some projected metre values."
+    },
+    {
+     "column": "Kinh độ",
+     "field": "longitude",
+     "confidence": 0.95,
+     "reason": "Kinh độ means longitude."
+    },
+    {
+     "column": "Diện tích (ha)",
+     "field": "area_ha",
+     "confidence": 0.95,
+     "reason": "Diện tích means area in hectares."
+    },
+    {
+     "column": "Ranh giới thửa (WKT)",
+     "field": "boundary_wkt",
+     "confidence": 0.97,
+     "reason": "Plot boundary as WKT polygons."
+    },
+    {
+     "column": "Ghi chú",
+     "field": "notes",
+     "confidence": 0.9,
+     "reason": "Ghi chú means remarks."
+    }
+   ]
+  },
+  "mode": "live",
+  "model": "claude-sonnet-5-5",
+  "recorded_at": "2026-10-11 07:06 UTC",
+  "duration_ms": 11690,
+  "cost_usd": 0.0393772,
+  "num_turns": 3,
+  "attempts": 1,
+  "key": "20eb13c7590609c8",
+  "prompt_version": "mapping-v1",
+  "fallback_reason": null
+ }
+}

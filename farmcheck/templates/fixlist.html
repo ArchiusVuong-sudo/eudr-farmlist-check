@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Fix list · run #{{ run.id }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="{{ url_for('index') }}">Farm lists</a> / <a href="{{ url_for('run_page', run_id=run.id) }}">{{ run.file_name }}, run #{{ run.id }}</a> / fix list</div>
+<div class="page-head">
+  <div>
+    <h1>Fix list for the supplier</h1>
+    <p class="sub">{{ rows|length }} lines for <span class="mono">{{ run.file_name }}</span> under rule pack {{ run.version }}: every error, every repair to confirm and every warning, with a fix hint. Review findings stay in-house.</p>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('export_fixlist', run_id=run.id) }}">Download CSV</a>
+</div>
+<section class="panel">
+  {% if rows %}
+  <div class="scroll" style="max-height:640px">
+  <table class="t">
+    <thead><tr><th class="num">Row</th><th>Plot</th><th>Issue</th><th>Message</th><th>Fix hint</th></tr></thead>
+    <tbody>
+    {% for r in rows %}<tr><td class="num muted">{{ r.row_number }}</td><td class="mono nowrap">{{ r.plot_code }}</td><td><span class="sev {{ r.severity }}">{{ r.issue_code }}</span></td><td class="small">{{ r.message }}</td><td class="small">{{ r.fix_hint }}</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}<div class="empty"><b>Nothing to send back</b>No plot needs the supplier.</div>{% endif %}
+</section>
+{% endblock %}

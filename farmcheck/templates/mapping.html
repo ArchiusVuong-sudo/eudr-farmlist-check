@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Map columns · {{ fl.file_name }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="{{ url_for('index') }}">Farm lists</a> / {{ fl.file_name }}</div>
+<div class="page-head">
+  <div>
+    <h1>Map the columns of <span class="mono" style="font-size:20px">{{ fl.file_name }}</span></h1>
+    <p class="sub">{{ n_rows }} rows · {{ fl.headers|length }} columns · declared country {{ fl.country_name }} · {{ fl.file_kind|upper }}</p>
+  </div>
+</div>
+<div class="stepper">
+  <span class="step done"><span class="n">✓</span>Upload</span>
+  <span class="step now"><span class="n">2</span>Map columns</span>
+  <span class="step"><span class="n">3</span>Run checks</span>
+  <span class="step"><span class="n">4</span>Review results</span>
+</div>
+
+<div id="proposal" hx-get="{{ url_for('proposal', farm_list_id=fl.id) }}" hx-trigger="load" hx-swap="outerHTML">
+  <section class="panel">
+    <div class="panel-head">
+      <div class="row"><span class="spinner"></span><h2>Proposing a column mapping</h2></div>
+      <span class="muted small">header rules first; for an unknown layout the model reads the headers and column profiles only</span>
+    </div>
+    <div class="skeleton">
+      {% for h in fl.headers %}<div class="row"><div class="ln" style="width:180px"></div><div class="ln" style="width:140px"></div><div class="ln" style="flex:1"></div></div>{% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}

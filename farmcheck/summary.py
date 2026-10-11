@@ -99,5 +99,6 @@ def summarize(p: dict[str, Any], issues: list[dict[str, Any]], loss: list[dict[s
 
     seen: set[str] = set()
     uniq = [s for s in steps if not (s in seen or seen.add(s))]
+    uniq = [uniq[0]] + [x[0].lower() + x[1:] for x in uniq[1:]] if uniq else []
     next_step = "; ".join(uniq) + "." if uniq else "No action needed."
     return " ".join(parts), next_step

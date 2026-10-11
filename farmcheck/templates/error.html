@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="panel" style="max-width:640px;margin:48px auto">
+  <div class="panel-body">
+    <h1>{{ title }}</h1>
+    <p class="muted" style="margin-top:8px">{{ message }}</p>
+    <p style="margin-top:16px"><a class="btn" href="{{ url_for('index') }}">Back to farm lists</a></p>
+  </div>
+</div>
+{% endblock %}

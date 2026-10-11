@@ -1,0 +1,44 @@
+<section class="panel" id="plots">
+  <div class="panel-head">
+    <h2>Plots</h2>
+    <div class="tabs" role="tablist">
+      <button class="tab {{ 'active' if not status }}" hx-get="{{ url_for('run_plots', run_id=run.id) }}" hx-target="#plots" hx-swap="outerHTML">All<span class="c">{{ run.counts.values()|sum }}</span></button>
+      {% for s in STATUS_ORDER %}
+      <button class="tab {{ 'active' if status == s }}" hx-get="{{ url_for('run_plots', run_id=run.id, status=s) }}" hx-target="#plots" hx-swap="outerHTML">{{ STATUS_LABELS[s] }}<span class="c">{{ run.counts.get(s, 0) }}</span></button>
+      {% endfor %}
+    </div>
+  </div>
+  {% if plots %}
+  <div class="scroll" style="max-height:640px">
+  <table class="t">
+    <thead><tr><th class="num">Row</th><th>Plot</th><th>Geometry</th><th>Status</th><th>Findings</th></tr></thead>
+    <tbody>
+    {% for p in plots %}
+      <tr>
+        <td class="num muted">{{ p.row_number }}</td>
+        <td class="nowrap"><a class="mono" href="{{ url_for('plot_page', plot_id=p.id) }}">{{ p.plot_code }}</a></td>
+        <td class="small nowrap">{% if p.geom_kind == 'polygon' %}boundary · {{ p.area_ha|ha }}{% elif p.geom_kind == 'point' %}point · {{ p.declared_area_ha|ha if p.declared_area_ha is not none else 'no area' }}{% else %}<span class="muted">none</span>{% endif %}</td>
+        <td><span class="pill {{ p.status }}">{{ STATUS_LABELS[p.status] }}</span></td>
+        <td class="small">
+          {% for i in p.issues %}<div style="margin-bottom:3px"><span class="sev {{ i.severity }}">{{ i.code }}</span> {{ i.message }}</div>{% else %}<span class="muted">none</span>{% endfor %}
+          {% if p.repair and not p.repair.as_given_ok and p.repair.candidates %}
+          <details style="margin-top:4px">
+            <summary class="small">as given, candidates tried, the one that fits</summary>
+            <table class="t" style="margin-top:6px;border:1px solid var(--line-2);border-radius:6px">
+              <tr><td class="muted">as given</td><td class="mono" colspan="2">{{ p.lat_in }}, {{ p.lon_in }}</td></tr>
+              {% for c in p.repair.candidates %}
+              <tr class="{{ 'sel' if c.kind == p.repair.fit_kind }}"><td>{{ c.kind|cand }}</td><td class="mono">{{ c.lat }}, {{ c.lon }}</td><td>{% if c.inside %}<span class="ok">inside {{ run.country_name }}</span>{% else %}<span class="muted">outside</span>{% endif %}</td></tr>
+              {% endfor %}
+            </table>
+          </details>
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% else %}
+  <div class="empty"><b>No plots with this status</b>Pick another tab.</div>
+  {% endif %}
+</section>

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Diff #{{ d.a.id }} → #{{ d.b.id }}{% endblock %}
+{% block content %}
+<div class="crumbs"><a href="{{ url_for('index') }}">Farm lists</a> / <a href="{{ url_for('run_page', run_id=d.a.id) }}">{{ d.a.file_name }}</a> / diff</div>
+<div class="page-head">
+  <div>
+    <h1>What changes from {{ d.a.version }} to {{ d.b.version }}</h1>
+    <p class="sub"><span class="mono">{{ d.a.file_name }}</span> · <a href="{{ url_for('run_page', run_id=d.a.id) }}">run #{{ d.a.id }}</a> ({{ d.a.version }}, {{ pack_a.title }}) compared with <a href="{{ url_for('run_page', run_id=d.b.id) }}">run #{{ d.b.id }}</a> ({{ d.b.version }}, {{ pack_b.title }})</p>
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('run_page', run_id=d.b.id) }}">Open run #{{ d.b.id }}</a>
+</div>
+{% if pack_b.version == 'v2' or pack_a.version == 'v2' %}
+<div class="banner model" style="margin-bottom:16px"><div><b>v2 is a simulated update for this demo, not an EU text.</b> It shows how a rule change is checked before it ships: the same list, re-run under the new pack, and every plot whose result moves.</div></div>
+{% endif %}
+
+<div class="grid cols-side" style="grid-template-columns:minmax(0,1fr) 470px">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>{{ d.changes|length }} plot{{ 's' if d.changes|length != 1 }} changed</h2>
+      {% if d.predicted is not none %}
+        {% if d.matches_prediction %}<span class="match">✓ exactly the {{ d.predicted|length }} plots the answer key predicts</span>
+        {% else %}<span class="match nomatch">answer key predicts {{ d.predicted|length }}: {{ d.predicted|join(', ') }}</span>{% endif %}
+      {% endif %}
+    </div>
+    {% if d.changes %}
+    <table class="t">
+      <thead><tr><th class="num">Row</th><th>Plot</th><th>Status</th><th>Issue codes</th><th>Caused by</th></tr></thead>
+      <tbody>
+      {% for c in d.changes %}
+        <tr>
+          <td class="num muted">{{ c.row }}</td>
+          <td class="nowrap"><a class="mono" href="{{ url_for('plot_page', plot_id=c.plot_id) }}">{{ c.plot_code }}</a></td>
+          <td class="nowrap"><span class="pill {{ c.status_old }}">{{ STATUS_LABELS[c.status_old].split(',')[0] }}</span> <span class="arrow">→</span> <span class="pill {{ c.status_new }}">{{ STATUS_LABELS[c.status_new].split(',')[0] }}</span>
+            {% if c.verdict_old != c.verdict_new %}<div class="small muted" style="margin-top:3px">{{ c.verdict_old }} → {{ c.verdict_new }}</div>{% endif %}</td>
+          <td class="small">
+            {% for x in c.removed %}<div><span class="diff-old mono">{{ x }}</span></div>{% endfor %}
+            {% for x in c.added %}<div><span class="diff-new mono">+ {{ x }}</span></div>{% endfor %}
+            {% for x in c.severity_changed %}<div><span class="mono">{{ x }}</span> <span class="muted">severity changed</span></div>{% endfor %}
+          </td>
+          <td class="small">
+            {% for k in c.causes %}<div style="margin-bottom:3px"><span class="code-chip" data-tip="Rule key in the YAML pack; old value in {{ d.a.version }}, new value in {{ d.b.version }}">{{ k.rule_key }}</span> <span class="diff-old">{{ k.old }}</span> <span class="arrow">→</span> <span class="diff-new">{{ k.new }}</span></div>{% endfor %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty"><b>No plot changed</b>{% if d.same_pack %}Same rule pack, same result: the runs are reproducible.{% else %}The rule changes do not touch any plot in this list.{% endif %}</div>
+    {% endif %}
+  </section>
+  <aside class="stack">
+    <section class="panel">
+      <div class="panel-head"><h2>Rule parameters that differ</h2></div>
+      {% if d.params %}
+      <table class="t small">
+        <thead><tr><th>Rule key</th><th>{{ d.a.version }}</th><th>{{ d.b.version }}</th></tr></thead>
+        {% for k, (o, n) in d.params.items() %}<tr><td class="mono" style="word-break:break-all">{{ k }}</td><td class="diff-old" style="word-break:break-all">{{ o }}</td><td class="diff-new" style="word-break:break-all">{{ n }}</td></tr>{% endfor %}
+      </table>
+      {% else %}<div class="empty">Same parameters.</div>{% endif %}
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Result hashes</h2></div>
+      <div class="panel-body"><dl class="kv"><dt>#{{ d.a.id }} {{ d.a.version }}</dt><dd><span class="hash">{{ d.a.result_hash }}</span></dd><dt>#{{ d.b.id }} {{ d.b.version }}</dt><dd><span class="hash">{{ d.b.result_hash }}</span></dd></dl></div>
+    </section>
+  </aside>
+</div>
+{% endblock %}

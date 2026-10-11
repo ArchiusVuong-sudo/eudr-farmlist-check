@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}{{ plot.plot_code }} · trace{% endblock %}
+{% block content %}
+{% set v = s.verdict.detail if s.verdict else {} %}
+<div class="crumbs"><a href="{{ url_for('index') }}">Farm lists</a> / <a href="{{ url_for('run_page', run_id=run.id) }}">{{ run.file_name }}, run #{{ run.id }}</a> / {{ plot.plot_code }}</div>
+<div class="page-head">
+  <div>
+    <h1><span class="mono" style="font-size:21px">{{ plot.plot_code }}</span> <span class="pill {{ plot.status }}" style="vertical-align:3px;font-size:13px">{{ STATUS_LABELS[plot.status] }}</span></h1>
+    <p class="sub">Row {{ plot.row_number }} of <span class="mono">{{ run.file_name }}</span> · run #{{ run.id }} · rule pack {{ run.version }} · declared country {{ run.country_name }}</p>
+  </div>
+  <a class="btn" href="{{ url_for('run_page', run_id=run.id) }}">Back to the run</a>
+</div>
+
+<div class="grid cols-side" style="grid-template-columns:minmax(0,1fr) 420px">
+  <div class="stack">
+    <section class="panel summary-card {{ plot.status }}">
+      <div class="panel-head"><h2>Plain-English summary for Support</h2><span class="muted small">built from the trace by a template, no model</span></div>
+      <div class="panel-body">
+        <p class="summary-text">{{ v.summary }}</p>
+        <div class="next"><b>Next step:</b> {{ v.next_step }}</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>Trace, from the raw row to the verdict</h2><span class="muted small">{{ steps|length }} steps, stored with the run</span></div>
+      <div class="panel-body trace">
+        {% for st in steps %}{% set d = st.detail %}
+        <div class="tstep">
+          <span class="no">{{ st.seq }}</span>
+          <div class="body">
+            <div class="ttl">{{ st.title }}
+              {% if st.stage == 'received' %}<span class="muted small" style="font-weight:500">{{ d.file }}, row {{ d.row }}, cells exactly as received</span>{% endif %}
+              {% if st.stage == 'mapping' %}<span class="muted small" style="font-weight:500">{{ d.source }}{% if d.profile_id %} · profile #{{ d.profile_id }}{% endif %}</span>{% endif %}
+            </div>
+            <div class="cnt">
+            {% if st.stage == 'received' %}
+              {% set used_cols = (s.parse.detail.fields.values()|selectattr('column', 'defined')|map(attribute='column')|list) if s.parse else [] %}
+              <div class="cells">
+                {% for c in d.cells %}<div class="cell {{ 'hl' if c.header in used_cols }}"><div class="h" title="{{ c.header }}">{{ c.header }}</div><div class="v">{{ c.raw if c.raw else '∅' }}</div>{% if c.fmt and c.fmt not in ('General',) %}<div class="f">Excel format {{ c.fmt }}</div>{% endif %}</div>{% endfor %}
+              </div>
+            {% elif st.stage == 'mapping' %}
+              <div class="small">{% for u in d.used %}<span class="code-chip" style="margin:0 4px 4px 0;display:inline-block">{{ u.header }} → {{ u.label }}</span>{% endfor %}</div>
+            {% elif st.stage == 'parse' %}
+              <table class="t small">
+                <thead><tr><th>Field</th><th>Raw cell</th><th>Read as</th><th>Format</th><th class="num">Decimals shown / real</th></tr></thead>
+                {% for key, f in d.fields.items() if key in ('lat', 'lon', 'area', 'boundary') %}
+                <tr>
+                  <td>{{ {'lat': 'Latitude', 'lon': 'Longitude', 'area': 'Area', 'boundary': 'Boundary'}[key] }} <span class="muted">({{ f.column }})</span></td>
+                  <td class="mono" style="max-width:260px;word-break:break-all">{{ f.raw }}</td>
+                  <td class="mono">{% if f.error %}<span class="bad">{{ f.error }}</span>{% elif key == 'boundary' %}{{ f.kind }}, {{ f.vertices }} vertices{% else %}{{ f.value }}{% endif %}</td>
+                  <td>{{ f.format or '' }}{% if f.excel_format %} <span class="muted">· Excel {{ f.excel_format }}</span>{% endif %}{% for n in f.notes or [] %}<div class="small muted">{{ n }}</div>{% endfor %}</td>
+                  <td class="num">{% if f.decimals_shown is defined %}{{ f.decimals_shown }} / {{ f.decimals_significant }}{% endif %}</td>
+                </tr>
+                {% endfor %}
+              </table>
+              {% if d.fields.metres_note %}<p class="small muted" style="margin-top:6px">{{ d.fields.metres_note }}</p>{% endif %}
+              {% if d.fields.point_note %}<p class="small muted" style="margin-top:6px">{{ d.fields.point_note }}</p>{% endif %}
+            {% elif st.stage == 'geometry' %}
+              {% if d.kind == 'polygon' %}
+                <p class="small">{% if d.valid_as_given %}Valid polygon as given{% else %}<span class="bad">Invalid as given:</span> {{ d.reason }}; ST_MakeValid gives {{ d.area_ha|ha }} (the ring measured {{ d.area_given_ha|ha }} as given){% endif %}{% if d.ring_autoclosed %}; ring closed by repeating the first point{% endif %}. Geodesic area {{ d.area_ha|ha }}, declared {{ d.declared_area_ha|ha }}.</p>
+              {% elif d.kind == 'point' %}
+                <p class="small">Point from <span class="mono">{{ d.lat_in }}, {{ d.lon_in }}</span> ({{ d.format }}), declared area {{ d.declared_area_ha|ha if d.declared_area_ha is not none else 'not given' }}.</p>
+              {% else %}<p class="small bad">{{ d.reason }}</p>{% endif %}
+            {% elif st.stage == 'country' %}
+              {% if d.polygon %}
+                <p class="small">{{ 'Boundary lies inside the declared country (100 m tolerance).' if d.outcome == 'as_given' else 'Boundary is not inside the declared country.' }}</p>
+              {% else %}
+                <p class="small" style="margin-bottom:6px">
+                  {% if d.outcome == 'as_given' %}The point as given lies inside {{ run.country_name }}; no repair.
+                  {% elif d.outcome == 'repaired' %}The point as given does not fit. Exactly one candidate lands inside {{ run.country_name }} ({{ d.tolerance_m }} m tolerance): <b>{{ d.fit_label }}</b>, giving <span class="mono">{{ d.lat }}, {{ d.lon }}</span>.
+                  {% elif d.outcome == 'ambiguous' %}<span class="bad">More than one candidate fits, so none was chosen.</span>
+                  {% else %}<span class="bad">Neither the point as given nor any candidate lands inside {{ run.country_name }}.</span>{% endif %}
+                </p>
+                {% if d.outcome != 'as_given' %}
+                <table class="t small">
+                  <thead><tr><th>Candidate reading (plpgsql coord_candidates)</th><th>Latitude, longitude</th><th>In {{ run.country_name }}</th></tr></thead>
+                  {% for c in d.candidates %}<tr class="{{ 'sel' if c.kind == d.fit_kind }}"><td>{{ c.label }}{% if c.kind == d.fit_kind %} <span class="tag tag-legal">chosen</span>{% endif %}</td><td class="mono">{{ c.lat }}, {{ c.lon }}</td><td>{{ '✓ inside' if c.inside else 'no' }}</td></tr>{% endfor %}
+                </table>
+                {% endif %}
+              {% endif %}
+            {% elif st.stage == 'checks' %}
+              {% for i in d.issues %}
+              <div style="padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;margin-bottom:6px">
+                <div class="row wrap"><span class="sev {{ i.severity }}">{{ SEVERITY_LABELS[i.severity] }}</span><b>{{ i.title }}</b><span class="code-chip">{{ i.code }}</span><span class="code-chip">rule {{ i.rule_key }}</span></div>
+                <div class="small" style="margin-top:4px">{{ i.message }}</div>
+                <div class="small" style="margin-top:4px">{% if i.citation == DEMO_NOTE %}<span class="tag tag-demo">{{ DEMO_NOTE }}</span>{% else %}<span class="tag tag-legal">{{ i.citation }}</span>{% endif %} <span class="muted">Fix: {{ i.fix_hint }}</span></div>
+              </div>
+              {% else %}<p class="small muted">No check fired.</p>{% endfor %}
+            {% elif st.stage == 'assess' %}
+              {% if d.reason %}<p class="small">Not assessed: {{ d.reason }}.</p>
+              {% else %}
+              <p class="small" style="margin-bottom:6px">
+                {% if d.basis == 'polygon' %}Assessed on the boundary ({{ d.assess_ha }} ha).
+                {% else %}Assessed as an equal-area geodesic circle of {{ d.assess_ha }} ha (radius {{ '%.0f'|format(d.radius_m) }} m, ST_Buffer on geography) around the point{{ ', from the declared area' if d.basis == 'circle_declared' else ', from an assumed area' }}.{% endif %}
+                Forest on 31 Dec 2020 under it: {{ d.forest_2020_ha|ha }}. Loss counts when a patch overlaps at least {{ d.min_overlap_ha }} ha with confidence {{ d.min_confidence }} or more, detected after {{ d.cutoff }}.
+              </p>
+              {% if d.loss %}
+              <table class="t small">
+                <thead><tr><th>Loss patch</th><th>Detected</th><th class="num">Confidence</th><th class="num">Overlap</th><th>Counted</th></tr></thead>
+                {% for h in d.loss %}<tr><td class="mono">{{ h.id }}</td><td>{{ h.detected_on }}</td><td class="num">{{ '%.2f'|format(h.confidence) }}</td><td class="num">{{ h.overlap_ha|ha(3) }}</td><td>{% if h.counted %}<span class="sev review">counted</span>{% else %}<span class="muted">{{ h.why }}</span>{% endif %}</td></tr>{% endfor %}
+              </table>
+              {% else %}<p class="small muted">No forest-loss patch overlaps it.</p>{% endif %}
+              {% for pa in d.protected %}<p class="small" style="margin-top:6px"><span class="sev review">protected</span> overlaps {{ pa.overlap_ha|ha(3) }} of {{ pa.name }}</p>{% endfor %}
+              {% endif %}
+            {% elif st.stage == 'verdict' %}
+              <p class="small"><span class="pill {{ d.status }}">{{ STATUS_LABELS[d.status] }}</span> precedence: an error means needs fix, then review, then repaired, else ready.</p>
+            {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <aside class="stack">
+    <section class="panel">
+      <div class="panel-head"><h2>Spatial evidence</h2><span class="badge badge-synth"><span class="dot"></span>Synthetic data</span></div>
+      <div class="panel-body">
+        {% if mini.plot %}
+        <div id="mini-map" class="map-mini"></div>
+        <script type="application/json" id="mini-data">{{ mini|tojson }}</script>
+        <div class="legend" style="margin-top:8px"><span><i style="background:var(--{{ plot.status }})"></i>{{ 'Boundary' if plot.geom_kind == 'polygon' else 'Assessed circle' }}</span><span><i style="background:#7c3aed"></i>Loss patch</span><span><i style="background:#0e7490"></i>Protected area</span></div>
+        {% else %}<div class="empty"><b>No geometry</b>This row has no usable location to draw.</div>{% endif %}
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>Versions behind this verdict</h2></div>
+      <div class="panel-body footer-meta stack" style="gap:8px">
+        <dl class="kv">
+          <dt>Rule pack</dt><dd>{{ pack.version }} · {{ pack.title }} <code>{{ pack.checksum }}</code></dd>
+          <dt></dt><dd class="small muted">{{ pack.note }}</dd>
+          {% for dsv in datasets %}<dt>{{ dsv.layer.replace('_', ' ') }}</dt><dd>v{{ dsv.version }} <code>{{ dsv.checksum }}</code> · {{ dsv.features }} features<div class="small muted">{{ dsv.source }}</div></dd>{% endfor %}
+          <dt>Run</dt><dd>#{{ run.id }} · hash <code>{{ run.result_hash }}</code></dd>
+          <dt>Query time</dt><dd>{{ run.assess_ms|ms }} for the loss join of the whole run</dd>
+        </dl>
+        <div><span class="muted small">Plan line</span><code style="display:block;white-space:pre-wrap;background:#f3f5f3;padding:8px;border-radius:6px;margin-top:4px">{{ plan_line }}</code></div>
+      </div>
+    </section>
+  </aside>
+</div>
+{% endblock %}
