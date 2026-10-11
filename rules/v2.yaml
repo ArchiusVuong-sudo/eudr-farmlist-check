@@ -1,0 +1,130 @@
+version: v2
+title: Simulated update
+note: Simulated update for this demo, not an EU text. Legal parameters cite Regulation (EU) 2023/1115; every other threshold is a demo rule, not legal advice.
+regulation: Regulation (EU) 2023/1115
+
+rules:
+  missing_geolocation:
+    code: MISSING_GEOLOCATION
+    title: No geolocation given
+    severity: error
+    citation: "Art. 9(1)(d): the geolocation of all plots of land is required"
+    fix_hint: Send the plot's latitude and longitude, or its boundary polygon
+
+  unparseable_value:
+    code: UNPARSEABLE_VALUE
+    title: Cell cannot be read
+    severity: error
+    fix_hint: Correct the cell quoted in the message
+
+  coordinate_precision:
+    code: COORD_PRECISION
+    title: Coordinates under 6 decimals
+    severity: error
+    citation: "Art. 2(28): latitude and longitude with at least six decimal digits"
+    params:
+      min_decimals: {value: 6, source: "Art. 2(28)"}
+    fix_hint: Send coordinates with at least six decimal digits from the GPS reading
+
+  zero_padded_precision:
+    code: COORD_ZERO_PADDED
+    title: Six decimals made of padding zeros
+    severity: error
+    params:
+      min_trailing_zeros: {value: 2, source: demo}
+    fix_hint: The coordinates look rounded and padded with zeros; send the full GPS reading
+
+  point_over_4ha:
+    code: POINT_OVER_4HA
+    title: Point given for a plot over 4 ha
+    severity: error
+    citation: "Art. 2(28): plots of more than four hectares need a polygon"
+    params:
+      max_point_area_ha: {value: 4, source: "Art. 2(28)"}
+    fix_hint: Send the boundary polygon of this plot
+
+  point_area_missing:
+    code: POINT_AREA_NEEDED
+    title: Point with no area
+    severity: error
+    params:
+      mode: {value: require, source: demo}
+      assumed_area_ha: {value: 1.0, source: demo}
+    fix_hint: Send the plot area in hectares
+
+  self_intersection:
+    code: SELF_INTERSECTION
+    title: Self-intersecting boundary repaired
+    severity: repaired
+    fix_hint: Confirm the repaired boundary or send a corrected polygon
+
+  ring_not_closed:
+    code: RING_AUTOCLOSED
+    title: Boundary ring closed automatically
+    severity: repaired
+    fix_hint: Confirm the closed boundary
+
+  coordinate_repair:
+    code: COORD_REPAIRED
+    title: Coordinates repaired to fit the declared country
+    severity: repaired
+    params:
+      country_tolerance_m: {value: 100, source: demo}
+    fix_hint: Confirm the corrected coordinates
+
+  outside_country:
+    code: OUTSIDE_COUNTRY
+    title: Outside the declared country
+    severity: error
+    fix_hint: Check the coordinates and the declared country
+
+  area_mismatch:
+    code: AREA_MISMATCH
+    title: Declared area differs from the boundary
+    severity: warning
+    params:
+      max_relative_diff: {value: 0.20, source: demo}
+    fix_hint: Check the declared area against the boundary
+
+  implausible_area:
+    code: IMPLAUSIBLE_AREA
+    title: Implausible declared area
+    severity: error
+    params:
+      max_area_ha: {value: 50, source: demo}
+    fix_hint: Correct the declared area (hectares, above 0)
+
+  duplicate_plot:
+    code: DUPLICATE_PLOT
+    title: Duplicate plot
+    severity: error
+    params:
+      same_point_m: {value: 1, source: demo}
+    fix_hint: Remove the repeated row or give it its own code and location
+
+  plot_overlap:
+    code: PLOT_OVERLAP
+    title: Overlaps another plot in the list
+    severity: error
+    params:
+      min_overlap_ha: {value: 0.05, source: demo}
+    fix_hint: Correct the two boundaries so they do not overlap
+
+  loss_after_cutoff:
+    code: LOSS_AFTER_CUTOFF
+    title: Forest loss after the cut-off
+    severity: review
+    citation: "Art. 2(13): cut-off date 31 December 2020"
+    params:
+      cutoff_date: {value: "2020-12-31", source: "Art. 2(13)"}
+      min_overlap_ha: {value: 0.02, source: demo}
+      min_confidence: {value: 0.60, source: demo}
+    fix_hint: Review the plot against imagery; ask the supplier for the boundary polygon
+
+  protected_area:
+    code: PROTECTED_AREA_OVERLAP
+    title: Overlaps a protected area
+    severity: review
+    params:
+      min_overlap_ha: {value: 0.01, source: demo}
+    fix_hint: Review the plot's location against the protected area

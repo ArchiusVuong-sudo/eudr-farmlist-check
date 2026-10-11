@@ -1,0 +1,980 @@
+{
+ "sample": "vn_htx_daklak.xlsx",
+ "synthetic": true,
+ "generator": "scripts/make_synthetic.py --seed 7",
+ "rows": [
+  {
+   "row": 2,
+   "plot_code": "DL-0101",
+   "kind": "missing",
+   "note": "no coordinates and no boundary",
+   "v1": {
+    "codes": [
+     "MISSING_GEOLOCATION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "MISSING_GEOLOCATION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 3,
+   "plot_code": "DL-0102",
+   "kind": "bowtie",
+   "note": "self-intersecting (bowtie) boundary",
+   "v1": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 4,
+   "plot_code": "DL-0103",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 5,
+   "plot_code": "DL-0104",
+   "kind": "no_area",
+   "note": "point with no area",
+   "v1": {
+    "codes": [
+     "POINT_AREA_ASSUMED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "POINT_AREA_NEEDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 6,
+   "plot_code": "DL-0105",
+   "kind": "area_mismatch",
+   "note": "declared area far from the boundary's area",
+   "v1": {
+    "codes": [
+     "AREA_MISMATCH"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "AREA_MISMATCH"
+    ],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 7,
+   "plot_code": "DL-0106",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 8,
+   "plot_code": "DL-0107",
+   "kind": "bowtie",
+   "note": "self-intersecting (bowtie) boundary",
+   "v1": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 9,
+   "plot_code": "DL-0108",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 10,
+   "plot_code": "DL-0109",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 11,
+   "plot_code": "DL-0110",
+   "kind": "unparseable",
+   "note": "coordinate cell with a typo",
+   "v1": {
+    "codes": [
+     "UNPARSEABLE_VALUE"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "UNPARSEABLE_VALUE"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 12,
+   "plot_code": "DL-0111",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 13,
+   "plot_code": "DL-0112",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 14,
+   "plot_code": "DL-0113",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 15,
+   "plot_code": "DL-0114",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 16,
+   "plot_code": "DL-0115",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 17,
+   "plot_code": "DL-0116",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 18,
+   "plot_code": "DL-0117",
+   "kind": "point_big",
+   "note": "point given for a plot over 4 ha",
+   "v1": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 19,
+   "plot_code": "DL-0118",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 20,
+   "plot_code": "DL-0119",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 21,
+   "plot_code": "DL-0120",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 22,
+   "plot_code": "DL-0121",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 23,
+   "plot_code": "DL-0122",
+   "kind": "four_dec",
+   "note": "coordinates with 4 decimals",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 24,
+   "plot_code": "DL-0123",
+   "kind": "zero_pad_fmt",
+   "note": "4 real decimals shown as 6 by the cell number format",
+   "v1": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 25,
+   "plot_code": "DL-0124",
+   "kind": "utm",
+   "note": "point given in UTM metres",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 26,
+   "plot_code": "DL-0125",
+   "kind": "four_dec_general",
+   "note": "coordinates with 4 decimals (General cell format)",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 27,
+   "plot_code": "DL-0126",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 28,
+   "plot_code": "DL-0127",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 29,
+   "plot_code": "DL-0128",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 30,
+   "plot_code": "DL-0129",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 31,
+   "plot_code": "DL-0130",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 32,
+   "plot_code": "DL-0131",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 33,
+   "plot_code": "DL-0132",
+   "kind": "loss_small",
+   "note": "small loss overlap: below the v1 minimum, above the v2 minimum",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 34,
+   "plot_code": "DL-0133",
+   "kind": "overlap",
+   "note": "boundary overlaps another plot",
+   "v1": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 35,
+   "plot_code": "DL-0134",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 36,
+   "plot_code": "DL-0135",
+   "kind": "point_big",
+   "note": "point given for a plot over 4 ha",
+   "v1": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 37,
+   "plot_code": "DL-0136",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 38,
+   "plot_code": "DL-0137",
+   "kind": "utm_loss",
+   "note": "support case: 3.5 ha point given in UTM zone 49N metres; its circle overlaps a loss patch edge",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED",
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED",
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 39,
+   "plot_code": "DL-0138",
+   "kind": "swapped",
+   "note": "latitude and longitude swapped",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 40,
+   "plot_code": "DL-0139",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 41,
+   "plot_code": "DL-0140",
+   "kind": "unclosed",
+   "note": "boundary ring not closed",
+   "v1": {
+    "codes": [
+     "RING_AUTOCLOSED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "RING_AUTOCLOSED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 42,
+   "plot_code": "DL-0141",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 43,
+   "plot_code": "DL-0142",
+   "kind": "wrong_country",
+   "note": "point inside a neighbouring country",
+   "v1": {
+    "codes": [
+     "OUTSIDE_COUNTRY"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "OUTSIDE_COUNTRY"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 44,
+   "plot_code": "DL-0143",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 45,
+   "plot_code": "DL-0144",
+   "kind": "no_area",
+   "note": "point with no area",
+   "v1": {
+    "codes": [
+     "POINT_AREA_ASSUMED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "POINT_AREA_NEEDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 46,
+   "plot_code": "DL-0145",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 47,
+   "plot_code": "DL-0146",
+   "kind": "four_dec",
+   "note": "coordinates with 4 decimals",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 48,
+   "plot_code": "DL-0147",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 49,
+   "plot_code": "DL-0148",
+   "kind": "zero_pad_text",
+   "note": "4 real decimals padded with zeros in text",
+   "v1": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 50,
+   "plot_code": "DL-0149",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 51,
+   "plot_code": "DL-0150",
+   "kind": "overlap",
+   "note": "boundary overlaps another plot",
+   "v1": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 52,
+   "plot_code": "DL-0151",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 53,
+   "plot_code": "DL-0152",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 54,
+   "plot_code": "DL-0153",
+   "kind": "swapped",
+   "note": "latitude and longitude swapped",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 55,
+   "plot_code": "DL-0154",
+   "kind": "utm",
+   "note": "point given in UTM metres",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 56,
+   "plot_code": "DL-0155",
+   "kind": "zero_pad_fmt",
+   "note": "4 real decimals shown as 6 by the cell number format",
+   "v1": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 57,
+   "plot_code": "DL-0103",
+   "kind": "duplicate",
+   "note": "repeat of row 4",
+   "v1": {
+    "codes": [
+     "DUPLICATE_PLOT"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "DUPLICATE_PLOT"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 58,
+   "plot_code": "DL-0157",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 59,
+   "plot_code": "DL-0158",
+   "kind": "swapped",
+   "note": "latitude and longitude swapped",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 60,
+   "plot_code": "DL-0159",
+   "kind": "protected",
+   "note": "inside a protected area",
+   "v1": {
+    "codes": [
+     "PROTECTED_AREA_OVERLAP"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "PROTECTED_AREA_OVERLAP"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 61,
+   "plot_code": "DL-0160",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  }
+ ],
+ "v1_problems": 31,
+ "changed_v1_to_v2": [
+  "DL-0104",
+  "DL-0123",
+  "DL-0132",
+  "DL-0144",
+  "DL-0148",
+  "DL-0155"
+ ]
+}

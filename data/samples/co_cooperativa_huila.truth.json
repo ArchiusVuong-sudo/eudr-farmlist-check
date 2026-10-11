@@ -1,0 +1,1249 @@
+{
+ "sample": "co_cooperativa_huila.csv",
+ "synthetic": true,
+ "generator": "scripts/make_synthetic.py --seed 7",
+ "rows": [
+  {
+   "row": 2,
+   "plot_code": "HU-0201",
+   "kind": "protected",
+   "note": "inside a protected area",
+   "v1": {
+    "codes": [
+     "PROTECTED_AREA_OVERLAP"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "PROTECTED_AREA_OVERLAP"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 3,
+   "plot_code": "HU-0202",
+   "kind": "bowtie",
+   "note": "self-intersecting (bowtie) boundary",
+   "v1": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "SELF_INTERSECTION"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 4,
+   "plot_code": "HU-0203",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 5,
+   "plot_code": "HU-0204",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 6,
+   "plot_code": "HU-0205",
+   "kind": "sign",
+   "note": "minus sign dropped from the longitude",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 7,
+   "plot_code": "HU-0206",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 8,
+   "plot_code": "HU-0207",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 9,
+   "plot_code": "HU-0208",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 10,
+   "plot_code": "HU-0209",
+   "kind": "area_mismatch",
+   "note": "declared area far from the boundary's area",
+   "v1": {
+    "codes": [
+     "AREA_MISMATCH"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "AREA_MISMATCH"
+    ],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 11,
+   "plot_code": "HU-0210",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 12,
+   "plot_code": "HU-0211",
+   "kind": "no_area",
+   "note": "point with no area",
+   "v1": {
+    "codes": [
+     "POINT_AREA_ASSUMED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "POINT_AREA_NEEDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 13,
+   "plot_code": "HU-0212",
+   "kind": "implausible",
+   "note": "declared area of 0 ha",
+   "v1": {
+    "codes": [
+     "IMPLAUSIBLE_AREA"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "IMPLAUSIBLE_AREA"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 14,
+   "plot_code": "HU-0213",
+   "kind": "point_big",
+   "note": "point given for a plot over 4 ha",
+   "v1": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 15,
+   "plot_code": "HU-0214",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 16,
+   "plot_code": "HU-0215",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 17,
+   "plot_code": "HU-0216",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 18,
+   "plot_code": "HU-0217",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 19,
+   "plot_code": "HU-0218",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 20,
+   "plot_code": "HU-0219",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 21,
+   "plot_code": "HU-0220",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 22,
+   "plot_code": "HU-0221",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 23,
+   "plot_code": "HU-0222",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 24,
+   "plot_code": "HU-0223",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 25,
+   "plot_code": "HU-0224",
+   "kind": "overlap",
+   "note": "boundary overlaps another plot",
+   "v1": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 26,
+   "plot_code": "HU-0225",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 27,
+   "plot_code": "HU-0226",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 28,
+   "plot_code": "HU-0227",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 29,
+   "plot_code": "HU-0228",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 30,
+   "plot_code": "HU-0229",
+   "kind": "four_dec",
+   "note": "coordinates with 4 decimals",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 31,
+   "plot_code": "HU-0230",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 32,
+   "plot_code": "HU-0231",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 33,
+   "plot_code": "HU-0232",
+   "kind": "zero_pad_text",
+   "note": "4 real decimals padded with zeros in text",
+   "v1": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 34,
+   "plot_code": "HU-0233",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 35,
+   "plot_code": "HU-0234",
+   "kind": "sign",
+   "note": "minus sign dropped from the longitude",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 36,
+   "plot_code": "HU-0235",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 37,
+   "plot_code": "HU-0236",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 38,
+   "plot_code": "HU-0237",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 39,
+   "plot_code": "HU-0238",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 40,
+   "plot_code": "HU-0239",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 41,
+   "plot_code": "HU-0240",
+   "kind": "loss_small",
+   "note": "small loss overlap: below the v1 minimum, above the v2 minimum",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 42,
+   "plot_code": "HU-0241",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 43,
+   "plot_code": "HU-0242",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 44,
+   "plot_code": "HU-0243",
+   "kind": "swapped",
+   "note": "latitude and longitude swapped",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 45,
+   "plot_code": "HU-0244",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 46,
+   "plot_code": "HU-0245",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 47,
+   "plot_code": "HU-0246",
+   "kind": "four_dec",
+   "note": "coordinates with 4 decimals",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 48,
+   "plot_code": "HU-0247",
+   "kind": "overlap",
+   "note": "boundary overlaps another plot",
+   "v1": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "PLOT_OVERLAP"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 49,
+   "plot_code": "HU-0248",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 50,
+   "plot_code": "HU-0249",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 51,
+   "plot_code": "HU-0250",
+   "kind": "dms_low",
+   "note": "DMS with whole seconds (under 6-decimal precision)",
+   "v1": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "COORD_PRECISION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 52,
+   "plot_code": "HU-0251",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 53,
+   "plot_code": "HU-0252",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 54,
+   "plot_code": "HU-0253",
+   "kind": "swapped",
+   "note": "latitude and longitude swapped",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 55,
+   "plot_code": "HU-0254",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 56,
+   "plot_code": "HU-0255",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 57,
+   "plot_code": "HU-0256",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 58,
+   "plot_code": "HU-0257",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 59,
+   "plot_code": "HU-0258",
+   "kind": "sign",
+   "note": "minus sign dropped from the longitude",
+   "v1": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "COORD_REPAIRED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 60,
+   "plot_code": "HU-0259",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 61,
+   "plot_code": "HU-0260",
+   "kind": "wrong_country",
+   "note": "point inside a neighbouring country",
+   "v1": {
+    "codes": [
+     "OUTSIDE_COUNTRY"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "OUTSIDE_COUNTRY"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 62,
+   "plot_code": "HU-0261",
+   "kind": "zero_pad_text",
+   "note": "4 real decimals padded with zeros in text",
+   "v1": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "COORD_ZERO_PADDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 63,
+   "plot_code": "HU-0262",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 64,
+   "plot_code": "HU-0263",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 65,
+   "plot_code": "HU-0264",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 66,
+   "plot_code": "HU-0265",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 67,
+   "plot_code": "HU-0266",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 68,
+   "plot_code": "HU-0267",
+   "kind": "no_area",
+   "note": "point with no area",
+   "v1": {
+    "codes": [
+     "POINT_AREA_ASSUMED"
+    ],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [
+     "POINT_AREA_NEEDED"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 69,
+   "plot_code": "HU-0268",
+   "kind": "dms",
+   "note": "clean, coordinates in degrees-minutes-seconds",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 70,
+   "plot_code": "HU-0269",
+   "kind": "missing",
+   "note": "no coordinates and no boundary",
+   "v1": {
+    "codes": [
+     "MISSING_GEOLOCATION"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "MISSING_GEOLOCATION"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 71,
+   "plot_code": "HU-0270",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 72,
+   "plot_code": "HU-0271",
+   "kind": "unparseable",
+   "note": "coordinate cell with a typo",
+   "v1": {
+    "codes": [
+     "UNPARSEABLE_VALUE"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "UNPARSEABLE_VALUE"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 73,
+   "plot_code": "HU-0272",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 74,
+   "plot_code": "HU-0273",
+   "kind": "loss",
+   "note": "overlaps forest loss after the cut-off",
+   "v1": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   },
+   "v2": {
+    "codes": [
+     "LOSS_AFTER_CUTOFF"
+    ],
+    "status": "review"
+   }
+  },
+  {
+   "row": 75,
+   "plot_code": "HU-0274",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 76,
+   "plot_code": "HU-0275",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 77,
+   "plot_code": "HU-0203",
+   "kind": "duplicate",
+   "note": "repeat of row 4",
+   "v1": {
+    "codes": [
+     "DUPLICATE_PLOT"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "DUPLICATE_PLOT"
+    ],
+    "status": "needs_fix"
+   }
+  },
+  {
+   "row": 78,
+   "plot_code": "HU-0277",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 79,
+   "plot_code": "HU-0278",
+   "kind": "clean",
+   "note": "clean",
+   "v1": {
+    "codes": [],
+    "status": "ready"
+   },
+   "v2": {
+    "codes": [],
+    "status": "ready"
+   }
+  },
+  {
+   "row": 80,
+   "plot_code": "HU-0279",
+   "kind": "unclosed",
+   "note": "boundary ring not closed",
+   "v1": {
+    "codes": [
+     "RING_AUTOCLOSED"
+    ],
+    "status": "repaired"
+   },
+   "v2": {
+    "codes": [
+     "RING_AUTOCLOSED"
+    ],
+    "status": "repaired"
+   }
+  },
+  {
+   "row": 81,
+   "plot_code": "HU-0280",
+   "kind": "point_big",
+   "note": "point given for a plot over 4 ha",
+   "v1": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   },
+   "v2": {
+    "codes": [
+     "POINT_OVER_4HA"
+    ],
+    "status": "needs_fix"
+   }
+  }
+ ],
+ "v1_problems": 28,
+ "changed_v1_to_v2": [
+  "HU-0211",
+  "HU-0232",
+  "HU-0240",
+  "HU-0261",
+  "HU-0267"
+ ]
+}
