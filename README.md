@@ -19,7 +19,7 @@ All data in this repo is synthetic. This is a prototype of farm-list intake chec
 ## Architecture
 
 ```mermaid
-flowchart LR
+flowchart TB
   list["Supplier farm list, CSV or XLSX"] --> upload["Flask upload route"]
   upload --> rules["Header rules"]
   rules -->|Unknown layout| agent["Agent SDK proposal"]
