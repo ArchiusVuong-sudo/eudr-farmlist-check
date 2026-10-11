@@ -54,9 +54,9 @@ def missing_required(fields: set[str]) -> list[str]:
     missing = []
     if "plot_code" not in fields:
         missing.append("plot_code")
-    has_point = "latitude" in fields and "longitude" in fields
-    if not has_point and "boundary_wkt" not in fields:
+    has_lat, has_lon = "latitude" in fields, "longitude" in fields
+    if has_lat != has_lon:
+        missing.append("longitude" if has_lat else "latitude")
+    elif not has_lat and "boundary_wkt" not in fields:
         missing.append("latitude and longitude, or boundary_wkt")
-    elif ("latitude" in fields) != ("longitude" in fields):
-        missing.append("longitude" if "latitude" in fields else "latitude")
     return missing

@@ -22,6 +22,7 @@ from claude_agent_sdk import (
     AssistantMessage,
     ClaudeAgentOptions,
     ResultMessage,
+    SdkMcpTool,
     create_sdk_mcp_server,
     query,
     tool,
@@ -33,9 +34,8 @@ SERVER = "farmlist"
 TOOL = "submit_mapping"
 
 
-async def run(req: dict[str, Any]) -> dict[str, Any]:
-    headers: list[str] = req["headers"]
-    accepted: dict[str, Any] = {}
+def make_submit_tool(headers: list[str], accepted: dict[str, Any]) -> SdkMcpTool[Any]:
+    """The app's only tool: its input is validated against the schema and the file's headers."""
 
     @tool(TOOL, "Submit the column mapping for this farm list (one entry per column).", TOOL_INPUT_SCHEMA)
     async def submit_mapping(args: dict[str, Any]) -> dict[str, Any]:
@@ -48,7 +48,13 @@ async def run(req: dict[str, Any]) -> dict[str, Any]:
         accepted["proposal"] = proposal.model_dump()
         return {"content": [{"type": "text", "text": "Accepted."}]}
 
-    server = create_sdk_mcp_server(SERVER, tools=[submit_mapping])
+    return submit_mapping
+
+
+async def run(req: dict[str, Any]) -> dict[str, Any]:
+    headers: list[str] = req["headers"]
+    accepted: dict[str, Any] = {}
+    server = create_sdk_mcp_server(SERVER, tools=[make_submit_tool(headers, accepted)])
     out: dict[str, Any] = {"ok": False, "proposal": None, "model": req["model"], "duration_ms": 0,
                            "cost_usd": None, "num_turns": 0, "error": None, "api_error_status": None}
     t0 = time.monotonic()

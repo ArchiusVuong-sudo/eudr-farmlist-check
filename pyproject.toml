@@ -28,5 +28,6 @@ package = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-q"
 markers = ["live: calls the real model (opt-in with LIVE=1)"]
